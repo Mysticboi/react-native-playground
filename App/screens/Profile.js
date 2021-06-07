@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet, Text } from 'react-native';
+import { View, StyleSheet, Text, StatusBar } from 'react-native';
 
 import { Avatar } from 'react-native-elements';
 
@@ -33,6 +33,7 @@ const styles = StyleSheet.create({
 export default ({ navigation }) => {
   return (
     <View style={styles.container}>
+      <StatusBar barStyle="light-content" backgroundColor="#708090" />
       <View style={styles.avatar}>
         <Avatar
           rounded
