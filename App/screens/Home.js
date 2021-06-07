@@ -18,6 +18,8 @@ import { Entypo } from '@expo/vector-icons';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ConversionContext } from '../util/ConversionContext';
 
+import { Footer, FooterTab, Button as Button2, Icon } from 'native-base';
+
 const screen = Dimensions.get('window');
 
 const styles = StyleSheet.create({
@@ -55,6 +57,10 @@ const styles = StyleSheet.create({
     marginHorizontal: 20,
     marginVertical: 20,
   },
+  footer: {
+    flex: 1,
+    justifyContent: 'flex-end',
+  },
 });
 export default ({ navigation }) => {
   const [value, setValue] = useState('100');
@@ -90,17 +96,17 @@ export default ({ navigation }) => {
     <View style={styles.container}>
       <ScrollView scrollEnabled={scrollEnabled}>
         <StatusBar barStyle="light-content" backgroundColor="#708090" />
-
-        <SafeAreaView style={styles.header}>
-          <TouchableOpacity
-            onPress={() => {
-              navigation.push('Options');
-            }}
-          >
-            <Entypo name="cog" size={32} color="white" />
-          </TouchableOpacity>
-        </SafeAreaView>
-
+        {/*
+          <SafeAreaView style={styles.header}>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.push('Options');
+              }}
+            >
+              <Entypo name="cog" size={32} color="white" />
+            </TouchableOpacity>
+          </SafeAreaView>
+          */}
         <View style={styles.logoContainer}>
           <Image
             source={require('../assets/images/background.png')}
@@ -114,7 +120,6 @@ export default ({ navigation }) => {
           />
         </View>
         <Text style={styles.textHeader}>Currency Converter</Text>
-
         {isLoading ? (
           <ActivityIndicator size="large" color="white" />
         ) : (
@@ -158,6 +163,21 @@ export default ({ navigation }) => {
           </>
         )}
       </ScrollView>
+      <View style={styles.footer}>
+        <Footer>
+          <FooterTab>
+            <Button2 active>
+              <Icon name="cash-outline" />
+            </Button2>
+            <Button2 onPress={() => navigation.push('Options')}>
+              <Icon name="settings" />
+            </Button2>
+            <Button2 onPress={() => navigation.push('Profile')}>
+              <Icon name="person" />
+            </Button2>
+          </FooterTab>
+        </Footer>
+      </View>
     </View>
   );
 };

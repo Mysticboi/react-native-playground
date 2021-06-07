@@ -5,15 +5,26 @@ import {
   Linking,
   Alert,
   StatusBar,
+  StyleSheet,
+  View,
 } from 'react-native';
 import { RowItem, RowSeparator } from '../components/RowItem';
+
+import { Footer, FooterTab, Button, Icon } from 'native-base';
 
 const openUrl = (url) => {
   return Linking.openURL(url).catch(() => {
     Alert.alert('Sorry, something went wrong.', 'Please try again later');
   });
 };
-export default () => {
+
+const styles = StyleSheet.create({
+  footer: {
+    flex: 1,
+    justifyContent: 'flex-end',
+  },
+});
+export default ({ navigation }) => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <StatusBar barStyle="dark-content" backgroundColor="white" />
@@ -42,6 +53,21 @@ export default () => {
           onPress={() => openUrl('https://facebook.com')}
         />
       </ScrollView>
+      <View style={styles.footer}>
+        <Footer>
+          <FooterTab>
+            <Button onPress={() => navigation.push('Home')}>
+              <Icon name="cash-outline" />
+            </Button>
+            <Button active>
+              <Icon name="settings" />
+            </Button>
+            <Button onPress={() => navigation.push('Profile')}>
+              <Icon name="person" />
+            </Button>
+          </FooterTab>
+        </Footer>
+      </View>
     </SafeAreaView>
   );
 };

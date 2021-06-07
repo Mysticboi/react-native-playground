@@ -10,6 +10,7 @@ export const ConversionContextProvider = ({ children }) => {
   const [date, setDate] = useState();
   const [rates, setRates] = useState({});
   const [isLoading, setIsLoading] = useState(true);
+  const [actualScreen, setActualScreen] = useState('Profile');
 
   const setBaseCurrency = async (currency) => {
     setIsLoading(true);
