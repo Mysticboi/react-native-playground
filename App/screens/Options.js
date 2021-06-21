@@ -65,6 +65,9 @@ export default ({ navigation }) => {
             <Button onPress={() => navigation.push('Profile')}>
               <Icon name="person" />
             </Button>
+            <Button onPress={() => navigation.push('Database')}>
+              <Icon name="cloud-upload" />
+            </Button>
           </FooterTab>
         </Footer>
       </View>

@@ -16,7 +16,7 @@ export const ConversionContextProvider = ({ children }) => {
     setIsLoading(true);
     try {
       const response = await api(`/latest?base=${currency}`);
-      console.log('response', response);
+      // console.log('response', response);
       _setBaseCurrency(currency);
       setDate(response.date);
       setRates(response.rates);
