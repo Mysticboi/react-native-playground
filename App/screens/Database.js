@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, TextInput } from 'react-native';
+import { View, Text, StyleSheet, TextInput, SafeAreaView } from 'react-native';
 
 import { Footer, FooterTab, Button as Button2, Icon } from 'native-base';
 import * as SQLite from 'expo-sqlite';
@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
     margin: 10,
   },
 });
-const db = SQLite.openDatabase('db.db');
+const db = SQLite.openDatabase('database.db');
 
 export default ({ navigation }) => {
   const [items, setItems] = useState([]);
@@ -42,7 +42,7 @@ export default ({ navigation }) => {
         'Create table if not exists Items (id INTEGER PRIMARY KEY AUTOINCREMENT, value TEXT) '
       );
     });
-
+    
     db.transaction((tx) => {
       tx.executeSql(
         'SELECT * FROM Items',
@@ -58,7 +58,7 @@ export default ({ navigation }) => {
       );
     });
   }, []);
-
+  
   const add = (text) => {
     if (text === null || text === '') {
       return false;
@@ -86,7 +86,7 @@ export default ({ navigation }) => {
     });
   };
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Text style={styles.text}>Database Testing</Text>
       <Text style={styles.infoText}>
         Write some text in the input and it will be added to the SQLite
@@ -137,6 +137,6 @@ export default ({ navigation }) => {
           </FooterTab>
         </Footer>
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
