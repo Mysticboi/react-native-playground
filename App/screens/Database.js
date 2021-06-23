@@ -1,5 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, TextInput, SafeAreaView } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TextInput,
+  SafeAreaView,
+  TouchableOpacity,
+} from 'react-native';
+import { Entypo } from '@expo/vector-icons';
 
 import { Footer, FooterTab, Button as Button2, Icon } from 'native-base';
 import * as SQLite from 'expo-sqlite';
@@ -29,6 +37,20 @@ const styles = StyleSheet.create({
     fontStyle: 'italic',
     margin: 10,
   },
+  itemContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    maxHeight: 30,
+  },
+  cross: {
+    position: 'absolute',
+    right: 10,
+  },
+  button: {
+    marginVertical: 10,
+    marginLeft: 100,
+  },
 });
 const db = SQLite.openDatabase('database.db');
 
@@ -41,9 +63,6 @@ export default ({ navigation }) => {
       tx.executeSql(
         'Create table if not exists Items (id INTEGER PRIMARY KEY AUTOINCREMENT, value TEXT) '
       );
-    });
-    
-    db.transaction((tx) => {
       tx.executeSql(
         'SELECT * FROM Items',
         [],
@@ -58,7 +77,7 @@ export default ({ navigation }) => {
       );
     });
   }, []);
-  
+
   const add = (text) => {
     if (text === null || text === '') {
       return false;
@@ -80,7 +99,25 @@ export default ({ navigation }) => {
       );
       console.log('Inserted');
       tx.executeSql('select * from items', [], (_, { rows }) => {
-        console.log('rows', JSON.stringify(rows));
+        setItems(rows._array);
+      });
+    });
+  };
+
+  const remove = (id) => {
+    db.transaction((tx) => {
+      tx.executeSql(
+        'DELETE FROM Items WHERE id = ?',
+        [id],
+        (tx, results) => {
+          console.log('Executed Delete query');
+        },
+        (tx, error) => {
+          console.log('Could not execute Delete query');
+          console.log('DeleteError', error);
+        }
+      );
+      tx.executeSql('select * from items', [], (_, { rows }) => {
         setItems(rows._array);
       });
     });
@@ -101,21 +138,28 @@ export default ({ navigation }) => {
         style={styles.input}
         onChangeText={(value) => setText(value)}
       />
-
-      <Button2
-        light
-        onPress={() => {
-          add(text);
-          setText('');
-        }}
-      >
-        <Text>Press here to submit the text</Text>
-      </Button2>
+      <View style={styles.button}>
+        <Button2
+          light
+          onPress={() => {
+            add(text);
+            setText('');
+          }}
+        >
+          <Text>Press here to submit the text</Text>
+        </Button2>
+      </View>
       {items.map((item) => {
         return (
-          <Text style={styles.text} key={item.id}>
-            {item.value}
-          </Text>
+          <View style={styles.itemContainer} key={item.id}>
+            <Text style={styles.text}>{item.value}</Text>
+            <TouchableOpacity
+              style={styles.cross}
+              onPress={() => remove(item.id)}
+            >
+              <Entypo name="cross" size={24} color="black" />
+            </TouchableOpacity>
+          </View>
         );
       })}
 
