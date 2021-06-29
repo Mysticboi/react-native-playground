@@ -7,6 +7,7 @@ import Options from '../screens/Options';
 import CurrencyList from '../screens/CurrencyList';
 import Profile from '../screens/Profile';
 import Database from '../screens/Database';
+import Test from '../screens/Test';
 import { TouchableOpacity } from 'react-native';
 import { Entypo } from '@expo/vector-icons';
 import { ConversionContextProvider } from '../util/ConversionContext';
@@ -15,7 +16,7 @@ const MainStack = createStackNavigator();
 
 const MainStackScreen = () => {
   return (
-    <MainStack.Navigator initialRouteName="Database">
+    <MainStack.Navigator initialRouteName="Test">
       <MainStack.Screen
         name="Home"
         component={Home}
@@ -47,6 +48,11 @@ const MainStackScreen = () => {
       <MainStack.Screen
         name="Database"
         component={Database}
+        options={{ headerShown: false }}
+      />
+      <MainStack.Screen
+        name="Test"
+        component={Test}
         options={{ headerShown: false }}
       />
     </MainStack.Navigator>
