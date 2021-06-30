@@ -16,7 +16,7 @@ const MainStack = createStackNavigator();
 
 const MainStackScreen = () => {
   return (
-    <MainStack.Navigator initialRouteName="Test">
+    <MainStack.Navigator initialRouteName="Home">
       <MainStack.Screen
         name="Home"
         component={Home}
